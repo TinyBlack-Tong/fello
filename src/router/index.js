@@ -94,11 +94,7 @@ export default new Router({
           name: 'room_publish_phone',
           component: room_publish_phone,
         },
-
-
       ]
-
-
     },
     {
       path: '/room_monitor',
