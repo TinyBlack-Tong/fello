@@ -1,6 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
 <!--  用户点击主页的房间图片进行跳转 跳转到此页-->
-  <div>
+  <div class="frame">
 <!--    {{roomlist}}-->
 <!--    该区域用于显示房间的照片-->
     <div class="room_picture_place">
@@ -16,7 +16,7 @@
 
   </div>
     <!--详情 评价等一栏按钮-->
-    <Affix :offset-top="-13" @on-change="change">
+    <Affix :offset-top="-20" @on-change="change">
 
     <div class="button_place">
       <Button>详情</Button>
@@ -50,7 +50,6 @@
       </div>
 <!--      房东区域-->
   <div class="house_owner">
-
     <div class="demo-avatar" >
       <Avatar icon="ios-person"  size="large" src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>
     </div>
@@ -61,10 +60,10 @@
       <h4 class="house_introduction_word">
         这里是北信科公寓!!!真的┗|｀O′|┛ 嗷~~哒哒哒哒哒哒多多多多多多多多多多多多多多的点点滴滴</h4>
     </div>
-  </div>
-<!--    房东区域至此完结  --------------------------------------------->
-
     </div>
+    </div>
+
+    <!--    房东区域至此完结  --------------------------------------------->
     <div class="ensure">
       <div class="left">
         <h2>独立房间</h2>
@@ -77,12 +76,10 @@
         <h3>超赞房东经验丰富、评分很高，致力于为房客提供优质的住宿体验。</h3>
         <h3>入住时间 下午2:00后、退房时间 下午12:00</h3>
         <h3>通过密码钥匙盒自助入住</h3>
-
       </div>
-
     </div>
 
-    <Affix :offset-top="100">
+    <Affix :offset-top="45">
     <div class="window">
       <div class="price">
       <span style="color: #42b983;">
@@ -120,10 +117,8 @@
       </div>
     </div>
     </Affix>
-
-
-
   </div>
+
 </template>
 <script>
     export default {
@@ -166,6 +161,8 @@
 
 <style scoped>
   .room_picture_place{
+    position: relative;
+    top: -10px;
     width: 100%;
     height: 300px;
     /*border-style: solid;*/
@@ -210,11 +207,10 @@
     display: flex;
     height: 50px;
     background: white;
-
   }
   .split{
     position: relative;
-    width: 100%;
+    width: 50%;
     top:10px;
     height: 1px;
     background-color: 	#808080;
@@ -223,8 +219,6 @@
     position: absolute;
     top: 450px;
     left: 30px;
-
-
   }
   .icon_place  {
     position: relative;
@@ -232,24 +226,17 @@
     top: 10px;
     left: 0px;
     width: 400px;
-    /*border-style: solid;*/
     display: flex;
+    /*border-style: solid;*/
 
   }
   .button_place Button{
     margin-top: 10px;
   }
-  /*.house_introduction_place{*/
-
-  /*}*/
 
   .house_introduction_word{
     width: 300px;
     background: gainsboro;
-    /*max-width: 500px;*/
-    /*overflow: hidden;*/
-    /*text-overflow: ellipsis;*/
-    /*white-space: nowrap;*/
     margin-top: 70px;
     margin-left: -60px;
     margin-bottom: 10px;
@@ -276,6 +263,7 @@
     position: relative;
     top: 350px;
     left: 30px;
+    height: auto;
     /*top: 350px;*/
     /*left: -560px;*/
     display: flex;
@@ -293,7 +281,6 @@
     width: 400px;
     height: 320px;
     border:1px solid #D3D3D3;
-
     right: 100px;
   }
   .rate{
@@ -325,5 +312,8 @@
   h3{
     text-align:left;
     margin-top: 15px;
+  }
+  .frame{
+    height: 1000px;
   }
 </style>

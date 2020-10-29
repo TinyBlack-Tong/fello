@@ -12,9 +12,8 @@
       return {
         //是否填写了相关的个人资料
         is_information:false,
-      }
+             }
       },
-
     }
 </script>
 

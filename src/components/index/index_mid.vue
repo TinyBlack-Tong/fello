@@ -33,14 +33,15 @@
       <div class="card_item"   v-for="item in room_list" :key="item" @click="toRoom(item.id)">
         <img id="card_item_picture" :src="item.src" width="290px" height="220px"><br/>
         <span style="color:#2F4F4F"><h4>{{item.room_kind}}·{{item.bed_num}}张床</h4></span>
-        <h3>[<span style="color:	#FF69B4;">{{item.headline}}</span>]
+        <h3>[<span style="color:	#006400;">{{item.headline}}</span>]
           {{item.description}}
         </h3>
 
-        <h2>￥{{item.price}}/晚  <span style="text-decoration: line-through">200/晚</span></h2>
+        <h2><span >￥{{item.price}}/晚</span></h2>
+        <h3><span style="text-decoration: line-through;color: #42b983;position: relative;top: -25px;right: -90px">200/晚</span></h3>
         <!--          评价星星 不可改 disabled-->
         <template>
-          <Rate allow-half disabled v-model="item.valueHalf" />
+          <Rate style="position: relative;top:-20px;" allow-half disabled v-model="item.valueHalf" />
         </template>
       </div>
     </div>
@@ -59,10 +60,12 @@ export default {
       imageList:[{
         src:require('../../assets/banner2.jpg')
       },{
-        src:require('../../assets/banner3.jpg')
+        src:require('../../assets/wanshengjie.jpg')
       },],
       room_list:[{
+
         id:1,
+
         src:'https://i.loli.net/2017/08/21/599a521472424.jpg',
         //小标题
         room_kind:"2套公寓",
@@ -229,7 +232,6 @@ export default {
     justify-content: start;
     flex-wrap: wrap;
     width: 1200px;
-    height: 300px;
   }
   .card_item{
     display: inline-block;

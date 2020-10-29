@@ -9,9 +9,7 @@
 <script>
 export default {
   name: 'App',
-  created() {
-    is_house:false
-  }
+
 }
 </script>
 

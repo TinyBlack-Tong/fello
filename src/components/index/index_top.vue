@@ -5,20 +5,24 @@
 <!--* @Date: 2:19 下午 2020/9/29-->
 <!--*/-->
   <div>
+
+
 <!--  固定在页面顶部的搜索框 以及注册和登录-->
+    <Affix :offset-top="0" @on-change="change">
+
 
     <div class="top_place">
 <!--  <Affix>-->
-    <div id="control_color">
-    <div id="logo_image">
-    <img :src="logo_url" width="100px" height="100px" >
+<!--    <div id="control_color">-->
+    <div id="logo_image" @click="goto_index()">
+    <img :src="logo_url"  width="50px" height="50px" >
     </div>
 <!--    搜索框-->
     <div class="search_bar">
       <div id="search_image_div">
       <img :src='search_image' width="28px" height="28px" >
       </div>
-      <input v-model="research_content" v-on:keyup.enter="search()" placeholder="回车一下,你就知道~" id="input"></input>
+      <input style="position: relative;top: 2px" v-model="research_content" v-on:keyup.enter="search()" placeholder="回车一下,你就知道~" id="input"></input>
     </div>
 <!--    右上方的注册以及登录以及用户头像-->
     <div class="submit">
@@ -82,26 +86,27 @@
     <el-button type="primary" @click="dialogVisible = false" >确 定</el-button>
   </span>
       </el-dialog>
+
+
+
 <!--      头像区域-->
-      <div class="demo-avatar" @click="show_frame" v-show="headImage_flag">
+      <div  class="demo-avatar" @click="show_frame" v-show="headImage_flag">
         <Avatar icon="ios-person"  size="large" src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>
       </div>
       <div id="frame" v-show="frame_flag">
-        <div id="frame_button">
-        <Button>个人资料</Button>
-        <div class="split_in_frame">
+        <div class="frame_inside"  v-for="(item,index) in list" :key="item" @click="goto_page(index)">
+          <h4 style="margin-left: 20px">{{item}}</h4>
         </div>
-        <Button>账号</Button>
-        <div class="split_in_frame">
-        </div>
-        <Button>退出</Button>
-        </div>
-      </div>
     </div>
     </div>
+
 <!--  </Affix>-->
   </div>
-        <router-view></router-view>
+    </Affix>
+    <div>
+      <router-view></router-view>
+
+    </div>
 
     <div id="bottom_place">
       <!--      分割线-->
@@ -141,7 +146,7 @@
 
     <!--    bottom 一些按钮-->
     <div class="author">
-      Author:tong tong
+      Author:tong
     </div>
 
     <div class="notice" v-show="order_center_flag">
@@ -149,7 +154,6 @@
       <div class="split">
       </div>
       <h4 style="text-align: left;margin: 10px">您还没有预定过房源，点击「开始探索」开启下一段旅程吧</h4>
-<!--      <Button class="button" @click="goto_discover()">开始探索</Button>-->
       <el-button  class="button" @click="goto_discover(),open2()">开始探索</el-button>
     </div>
 
@@ -159,9 +163,14 @@
 <script>
     export default {
         name: "index",
+      created() {
+          open()
+      },
       data(){
           return{
+            list:["个人资料","账号","发布房源","我的旅行指南","商务同路人","退出"],
             research_content:"",
+            //
             order_center_flag:false,
             is_room_order:false,
             //element_UI中对话框变量
@@ -183,26 +192,28 @@
             },
             value2:0,
             //logo同路人的图片地址
-            logo_url:require('../../assets/logo5.png'),
+            logo_url:require('../../assets/sakula.png'),
             //search——bar的图片
             search_image:require("../../assets/research.png"),
             //当鼠标移入到头像按钮的时候,用于显示frame
             frame_flag:false,
 
             //是否显示头像
-            headImage_flag:false,
-            // //城市列表
-            // city_name_button:[{
-            //   city_name:"北京",
-            // },{
-            //   city_name:"天津",
-            // }],
+            headImage_flag:true,
+
           }
       },
       methods:{
+        goto_index(){
+          this.$router.push({
+            path: "/",
+          })
+
+        },
           show_frame(){
             this.frame_flag=!this.frame_flag
           },
+
         //在搜索框内回车直接查询
         search(){
             this.$router.push({
@@ -226,6 +237,19 @@
             }
 
         },
+        goto_page(index){
+          if (index === 2) {
+            this.$router.push({
+              path: "/room_publish",
+            });
+          } else {
+            this.$message({
+            message: '该功能还没有开放哦!',
+            center: true
+          });
+          }
+
+        },
         ok () {
           this.$Message.info('点击了确定');
         },
@@ -246,12 +270,11 @@
       //  点击开始探索
       goto_discover(){
         this.$router.push({
-          path: "/",
+          path: "/room_publish",
         }),
           this.order_center_flag=false
       }
-    }
-
+    },
     }
 </script>
 
@@ -261,32 +284,35 @@
     top: 0px;
     left: 0px;
     width: 100%;
-    height: 45px;
-    /*background-color:	#42b983;*/
-    /*border-style: solid;*/
+    height: 50px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+
   }
   /*最顶层的固定bar*/
-  #control_color{
-    width: 100%;
-    height: 45px;
-    /*background-color:	#42b983;*/
-    background-image: linear-gradient(to right,#F8FFAE,#43C6AC);
-    opacity: 0.9;
-  }
+  /*#control_color{*/
+  /*  width: 100%;*/
+  /*  height: 45px;*/
+  /*  !*background-color:	#42b983;*!*/
+  /*  background-image: linear-gradient(to right,#F8FFAE,#43C6AC);*/
+  /*  opacity: 0.9;*/
+  /*}*/
   /*搜索框的bar*/
   .search_bar{
     position: absolute;
-    top: -67px;
+    top: -70px;
     left: 50px;
     display: flex;
     margin: 70px;
-    height:40px;
+    height:50px;
     width: 400px;
     border-width:1px;
     border-style: solid;
     border-color: white;;
     border-radius: 9px;
     background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+
   }
   /*用户登录以及注册区域*/
   .submit{
@@ -302,6 +328,8 @@
   }
   /*头像区域*/
   .demo-avatar{
+
+    /*border-style: solid;*/
     position: relative;
     top: -5px;
     margin-left: 10px;
@@ -321,8 +349,8 @@
   /*logo图像的css*/
   #logo_image{
     position: absolute;
-    top: -25px;
-    left: 5px;
+    top: 0px;
+    left: 20px;
     width:10px;
     height: 10px;
   }
@@ -331,7 +359,7 @@
     position: relative;
     top:0px;
     border-style: none;
-    background-color: transparent;
+    background-color: #1D976C;
     color: white;
     font-size: 15px;
     margin-left: 11px;
@@ -356,11 +384,10 @@
     flex-direction: column;
     position: absolute;
     width: 160px;
-    height: 110px;
-    top: 40px;
+    height: auto;
+    top: 41px;
     left: 240px;
     background: white;
-    flex: 1;
     justify-content: start;
   }
   .split_in_frame{
@@ -372,6 +399,7 @@
     background: #42b983;
   }
   #frame_button{
+
     margin-top: 10px;
   }
   #dialog_submit{
@@ -382,8 +410,8 @@
   /*下方*/
   #bottom_place{
     position: relative;
-    top: 500px;
-    margin-top: 90px;
+    top: 50px;
+    /*margin-top: 90px;*/
   }
   .split{
     width: 100%;
@@ -440,8 +468,8 @@
     height: 150px;
     border: none;
     background: white;
-    /*display: flex;*/
-    /*flex-direction: column;*/
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+
   }
   .button{
     margin-top: 20px  ;
@@ -462,5 +490,18 @@
   }
   el-dialog{
     z-index: 100;
+  }
+
+  .frame_inside {
+    /*border-style: solid;*/
+    height: 50px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid #F5F5F5;
+  }
+  .frame_inside:hover{
+    border-bottom: 1px solid #A9A9A9;
   }
 </style>
