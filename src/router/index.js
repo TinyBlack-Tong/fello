@@ -15,8 +15,8 @@ import room_publish_picture from "../components/house_owner/room_publish_picture
 import room_publish_room_information from "../components/house_owner/room_publish_room_information";
 import room_publish_room_price from "../components/house_owner/room_publish_room_price";
 import room_publish_phone from "../components/house_owner/room_publish_phone";
-
 import room_monitor from "../components/house_owner/room_monitor";
+import room_order_dragon from "../components/house_owner/room_order_dragon"
 Vue.use(Router)
 
 export default new Router({
@@ -101,7 +101,11 @@ export default new Router({
       name: 'room_monitor',
       component: room_monitor,
     },
-
+    {
+      path: '/room_order_dragon',
+      name: 'room_order_dragon',
+      component: room_order_dragon,
+    },
 
 
 

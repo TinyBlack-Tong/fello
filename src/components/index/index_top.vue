@@ -22,7 +22,7 @@
       <div id="search_image_div">
       <img :src='search_image' width="28px" height="28px" >
       </div>
-      <input style="position: relative;top: 2px" v-model="research_content" v-on:keyup.enter="search()" placeholder="回车一下,你就知道~" id="input"></input>
+      <input style="position: relative;top: 2px" v-model="key" v-on:keyup.enter="search()" placeholder="回车一下,你就知道~" id="input"></input>
     </div>
 <!--    右上方的注册以及登录以及用户头像-->
     <div class="submit">
@@ -47,7 +47,7 @@
           </el-form-item>
           <el-form-item
             prop="identify_code"
-            label="验证码">
+            label="密码">
             <el-input v-model="dynamicValidateForm1.identify_code"></el-input>
           </el-form-item>
         </el-form>
@@ -169,7 +169,8 @@
       data(){
           return{
             list:["个人资料","账号","发布房源","我的旅行指南","商务同路人","退出"],
-            research_content:"",
+            key:"",
+            page:0,
             //
             order_center_flag:false,
             is_room_order:false,
@@ -203,6 +204,13 @@
 
           }
       },
+      mounted() {
+        //   const _this=this
+        //   this.$axios.get('http://localhost:8081/api/hot-houses?page=0&city=%E5%8C%97%E4%BA%AC').then(function (res) {
+        //   // console.log("row的值为"+this.res.code)
+        //   console.log(res.data.data)
+        // })
+      },
       methods:{
         goto_index(){
           this.$router.push({
@@ -219,7 +227,7 @@
             this.$router.push({
             path: "/room_search_result",
             query:{
-                content:this.search_content
+                content:this.key
             }
 
           })
@@ -252,6 +260,11 @@
         },
         ok () {
           this.$Message.info('点击了确定');
+
+          // this.$axios.get('http://localhost:8081/api/houses/2',row).then(function (res) {
+          //   console.log("row的值为"+row)
+          //   alert(row)
+          // })
         },
         //弹框消息
         open2() {
@@ -275,6 +288,18 @@
           this.order_center_flag=false
       }
     },
+
+      info(){
+        // const _this=this;
+        console.log("@222222222")
+
+        // this.$axios.get('http://localhost:8081/api/houses/2',row).then(function (res) {
+        //   console.log("row的值为"+row)
+        //   alert(row)
+        // })
+
+
+      }
     }
 </script>
 
@@ -411,6 +436,7 @@
   #bottom_place{
     position: relative;
     top: 50px;
+    margin-top: 20px;
     /*margin-top: 90px;*/
   }
   .split{

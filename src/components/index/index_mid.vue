@@ -31,20 +31,31 @@
     </div>
     <div class="card" >
       <div class="card_item"   v-for="item in room_list" :key="item" @click="toRoom(item.id)">
-        <img id="card_item_picture" :src="item.src" width="290px" height="220px"><br/>
-        <span style="color:#2F4F4F"><h4>{{item.room_kind}}·{{item.bed_num}}张床</h4></span>
-        <h3>[<span style="color:	#006400;">{{item.headline}}</span>]
-          {{item.description}}
-        </h3>
+        <img id="card_item_picture" :src="item.src" width="100%" height="220px"><br/>
+        <span style="color:	#006400;">
+          <h4>
+          {{item.city}}·
+          {{item.location}}
+          {{item.bedNum}}张床</h4></span>
+          <div class="title_place " style="height: 80px">
+            <h3>
 
-        <h2><span >￥{{item.price}}/晚</span></h2>
-        <h3><span style="text-decoration: line-through;color: #42b983;position: relative;top: -25px;right: -90px">200/晚</span></h3>
-        <!--          评价星星 不可改 disabled-->
-        <template>
-          <Rate style="position: relative;top:-20px;" allow-half disabled v-model="item.valueHalf" />
-        </template>
+          <span >
+          {{item.title}}
+        </span>
+<!--          {{item.description}}-->
+        </h3>
       </div>
+      <div class="price_star">
+        <h2><span >￥{{item.price}}/晚</span></h2>
+<!--        <h3><span>200/晚</span></h3>-->
+        <!--          评价星星 不可改 disabled-->
+          <Rate allow-half disabled v-model="item.rate" />
+        </div>
+      </div>
+
     </div>
+
   </div>
 
     </div>
@@ -63,123 +74,43 @@ export default {
         src:require('../../assets/wanshengjie.jpg')
       },],
       room_list:[{
-
         id:1,
-
+        //src 测试
         src:'https://i.loli.net/2017/08/21/599a521472424.jpg',
-        //小标题
-        room_kind:"2套公寓",
-        bed_num:"2",
-        //大标题
+        //图片地址
+        url:'',
+        type:1,
+        //床数
+        bedNum:"2",
         //民宿名称
-        headline:"北信科·学生宿舍",
+        title:"北信科·学生宿舍",
         //描述
         description:"北信科527",
+        //城市
+        city:"北京",
+        //价钱
         price:1,
         //房间的等级评星
-        valueHalf: 5,
+        rate: 5,
         //  房东的id
         house_owner:"韩梅梅"
-      },{
-        id:2,
-        src:"https://i.loli.net/2017/08/21/599a521472424.jpg",
-        //小标题
-        room_kind:"整套公寓",
-        bed_num:"1",
-        //大标题
-        //民宿名称
-        headline:"北信科·学生宿舍",
-        //描述
-        description:"北信科/真棒",
-        price:1,
-        //房间的等级评星
-        valueHalf: 5,
-        house_owner:"张彤"
-      },{
-        src:"https://i.loli.net/2017/08/21/599a521472424.jpg",
-        //小标题
-        room_kind:"整套公寓",
-        bed_num:"1",
-        //大标题
-        //民宿名称
-        headline:"北信科·学生宿舍",
-        //描述
-        description:"北京/鸟巢",
-        price:1,
-        //房间的等级评星
-        valueHalf: 5,
-        house_owner:"岳雷"
-      },{
-        src:'https://seopic.699pic.com/photo/50116/7534.jpg_wh1200.jpg',
-        //小标题
-        room_kind:"整套公寓",
-        bed_num:"1",
-        //大标题
-        //民宿名称
-        headline:"北信科·学生宿舍",
-        //描述
-        description:"北信科/强啊/",
-        price:200,
-        //房间的等级评星
-        valueHalf: 5,
-      },{
-        src:'https://seopic.699pic.com/photo/50115/5857.jpg_wh1200.jpg',
-        //小标题
-        room_kind:"整套公寓",
-        bed_num:"1",
-        //大标题
-        //民宿名称
-        headline:"北信科·学生宿舍",
-        //描述
-        description:"北信科/强啊/",
-        price:200,
-        //房间的等级评星
-        valueHalf: 5,
-
-      },{
-        src:'https://seopic.699pic.com/photo/50140/8553.jpg_wh1200.jpg',
-        //小标题
-        room_kind:"整套公寓",
-        bed_num:"1",
-        //大标题
-        //民宿名称
-        headline:"北信科·学生宿舍",
-        //描述
-        description:"北信科/强啊/",
-        price:200,
-        //房间的等级评星
-        valueHalf: 5,
-      },{
-        src:'https://i.loli.net/2017/08/21/599a521472424.jpg',
-        //小标题
-        room_kind:"整套公寓",
-        bed_num:"1",
-        //大标题
-        //民宿名称
-        headline:"北信科·学生宿舍",
-        //描述
-        description:"北信科/强啊/",
-        price:200,
-        //房间的等级评星
-        valueHalf: 5,
-      },{
-        src:'https://seopic.699pic.com/photo/50088/2797.jpg_wh1200.jpg',
-        //小标题
-        room_kind:"整套公寓",
-        bed_num:"1",
-        //大标题
-        //民宿名称
-        headline:"北信科·学生宿舍",
-        //描述
-        description:"北信科/强啊/",
-        price:200,
-        //房间的等级评星
-        valueHalf: 5,
-      }],
+      },],
     };
 
   },
-      methods: {
+
+  mounted() {
+    const _this=this
+      this.$axios.get('http://localhost:8081/api/hot-houses?page=0&city=%E5%8C%97%E4%BA%AC').then(function (res) {
+      // console.log("row的值为"+this.res.code)
+      console.log(res.data.data.url)
+        _this.room_list=res.data.data;
+        _this.room_list.src='https://i.loli.net/2017/08/21/599a521472424.jpg'
+
+
+    })
+  },
+  methods: {
       handleClose(done) {
         this.$confirm('确认关闭？')
           .then(_ => {
@@ -220,8 +151,12 @@ export default {
     background-size: cover;
   }
   #mid{
-    position: relative;
+    /*position: relative;*/
     top: 0px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+
   }
 
   .card{
@@ -229,16 +164,21 @@ export default {
     top: 40px;
     left: 15px;
     display: flex;
-    justify-content: start;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     width: 1200px;
   }
   .card_item{
     display: inline-block;
-    width: 20%;
-    height: 300px;
+    width: 340px;
+    height: 370px;
     margin: 30px;
     text-align: left;
+    border-style: solid;
+    justify-content: center;
+
+    align-items: center;
   }
   #card_item_picture{
     border-radius: 3px;
@@ -302,5 +242,12 @@ export default {
     border-style: none;
     text-align: left;
     margin-bottom: 20px;
+  }
+  .price_star{
+    /*border-style: solid;*/
+    position: relative;
+    bottom: 20px;
+    display: flex;
+    flex-direction: column;
   }
 </style>

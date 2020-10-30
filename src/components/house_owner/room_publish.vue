@@ -35,8 +35,15 @@
       mounted() {
         this.$router.push({
           path:'/room_publish_index'
-        })
+        }),
+        this.$axios.get('http://localhost:8081/api/users-login').then(function (res) {
+          // console.log("row的值为"+this.res.code)
+          console.log(res.data.data.url)
+          _this.room_list=res.data.data;
+          _this.room_list.src='https://i.loli.net/2017/08/21/599a521472424.jpg'
 
+
+        })
       }
     }
 </script>

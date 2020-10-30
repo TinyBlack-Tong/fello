@@ -41,7 +41,7 @@
       },
         created() {
           const _this=this;
-          this.$axios.get('http://localhost:8181/user/finall').then(function (res){
+          this.$axios.get('http://localhost:8081/api/houses/2').then(function (res){
             console.log(res)
             _this.tableData=res.data;
             _this.tableData.user_id=res.data.user_id
