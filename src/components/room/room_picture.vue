@@ -5,7 +5,7 @@
 <!--    该区域用于显示房间的照片-->
     <div class="room_picture_place">
         <div class="room_picture_left" >
-        <img class="big_picture"  src='https://i.loli.net/2017/08/21/599a521472424.jpg'>
+        <img class="big_picture"  :src="this.room_list.url">
         </div>
       <div class="room_picture_right">
         <img class="small_picture"  src='https://i.loli.net/2017/08/21/599a521472424.jpg'>
@@ -33,18 +33,18 @@
 
 
     <div class="information">
-      <span style="float:left">{{this.room_list.room_kind}}</span><br>
-      <span style="float:left;color: #1D976C;">{{this.room_list.headline}}</span> <br>
-      <span style="float:left"><h1> {{this.room_list.description}}</h1></span>
+      <span style="float:left;color: #006400;"><h3>{{this.room_list.title}}</h3></span><br>
+<!--      <span style="float:left;">{{this.room_list.headline}}</span> <br>-->
+      <span style="float:left;"><h4> {{this.room_list.description}}</h4></span>
       <div class="icon_place">
         <img style="width: 30px;height: 30px" src="../bedroom_icon.png">
-        <span  style="font-size: 15px">{{this.room_list.bed_num}}间卧室</span>
+        <span  style="font-size: 15px"><h4>{{this.room_list.bedroomNum}}间卧室</h4></span>
         <img style="width: 30px;height: 30px" src="../bed_icon.png">
-        <span  style="font-size: 15px">{{this.room_list.bed_num}}张床</span>
+        <span  style="font-size: 15px"><h4>{{this.room_list.bedNum}}张床</h4></span>
         <img style="width: 30px;height: 30px" src="../toilet_icon.png">
-         <span  style="font-size: 15px">{{this.room_list.bed_num}}个卫生间</span>
+        <span  style="font-size: 15px"><h4>{{this.room_list.bathroomNum}}个卫生间</h4></span>
         <img style="width: 30px;height: 30px" src="../people_icon.png">
-        <span  style="font-size: 15px">{{this.room_list.bed_num}}最大入住人数</span>
+        <span  style="font-size: 15px"><h4>{{this.room_list.pplMax}}最大入住人数</h4></span>
       </div>
       <div class="split">
       </div>
@@ -149,6 +149,12 @@
             people_number:'',
           }
       },
+      mounted() {
+        const _this=this
+        this.$axios.get(`http://localhost:8081/api//houses/${this.$route.query.room_id}`).then(function (res) {
+          _this.room_list=res.data.data;
+        })
+      },
       created() {
         this.room_list=this.$route.query.room_list
           console.log(this.room_list)
@@ -219,6 +225,8 @@
     position: absolute;
     top: 450px;
     left: 30px;
+    border-style: solid;
+    width: 620px;
   }
   .icon_place  {
     position: relative;
@@ -227,7 +235,7 @@
     left: 0px;
     width: 400px;
     display: flex;
-    /*border-style: solid;*/
+    border-style: solid;
 
   }
   .button_place Button{
@@ -315,5 +323,8 @@
   }
   .frame{
     height: 1000px;
+  }
+  h4{
+    color: grey;
   }
 </style>

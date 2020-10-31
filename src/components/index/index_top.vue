@@ -145,9 +145,9 @@
     </div>
 
     <!--    bottom 一些按钮-->
-    <div class="author">
-      Author:tong
-    </div>
+<!--    <div class="author">-->
+<!--      Author:tong-->
+<!--    </div>-->
 
     <div class="notice" v-show="order_center_flag">
       <h3 style="text-align: left;margin:10px;position: relative;top: 5px;">房源订单中心</h3>
@@ -159,6 +159,7 @@
 
   </div>
 </template>
+
 
 <script>
     export default {
@@ -402,6 +403,7 @@
   *@Date: 2:21 下午 2020/9/29
   **/
   .author{
+    border-style: solid;
     color: white;
   }
   #frame{

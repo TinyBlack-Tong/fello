@@ -30,8 +30,8 @@
 
     </div>
     <div class="card" >
-      <div class="card_item"   v-for="item in room_list" :key="item" @click="toRoom(item.id)">
-        <img id="card_item_picture" :src="item.src" width="100%" height="220px"><br/>
+      <div class="card_item"   v-for="item in room_list" @click="toRoom(item.id)">
+        <img id="card_item_picture" :src="item.url" width="100%" height="220px"><br/>
         <span style="color:	#006400;">
           <h4>
           {{item.city}}·
@@ -39,7 +39,6 @@
           {{item.bedNum}}张床</h4></span>
           <div class="title_place " style="height: 80px">
             <h3>
-
           <span >
           {{item.title}}
         </span>
@@ -103,11 +102,8 @@ export default {
     const _this=this
       this.$axios.get('http://localhost:8081/api/hot-houses?page=0&city=%E5%8C%97%E4%BA%AC').then(function (res) {
       // console.log("row的值为"+this.res.code)
-      console.log(res.data.data.url)
+      console.log(res.data.data)
         _this.room_list=res.data.data;
-        _this.room_list.src='https://i.loli.net/2017/08/21/599a521472424.jpg'
-
-
     })
   },
   methods: {
@@ -120,10 +116,12 @@ export default {
       },
         toRoom(id){
           const _this=this;
+          // console.log("room id ="+id)
           this.$router.push({
             path:"/room",
             query:{
-              room_list:_this.room_list[id-1]
+              room_id:id,
+              // room_list:_this.room_list,
             }
           })
         },
@@ -160,9 +158,10 @@ export default {
   }
 
   .card{
+    /*border-style: solid;*/
     position: relative;
-    top: 40px;
-    left: 15px;
+    top: 20px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -170,15 +169,16 @@ export default {
     width: 1200px;
   }
   .card_item{
-    display: inline-block;
+      display: inline-block;
     width: 340px;
     height: 370px;
     margin: 30px;
     text-align: left;
-    border-style: solid;
+    /*border-style: solid;*/
     justify-content: center;
-
     align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+
   }
   #card_item_picture{
     border-radius: 3px;
@@ -192,10 +192,10 @@ export default {
   }
   .city_button_bar{
     position: relative;
-    top: 10px;
-    left: 50px;
+    left: 70px;
     display: flex;
     top: 50px;
+    width: 1200px;
   }
   .city_button{
     font-size: 20px;
@@ -214,10 +214,6 @@ export default {
   .city_button:hover{
     background-color: #42b983;
     color: white;
-    /*border-top: none;*/
-    /*border-left: none;*/
-    /*border-right: none;*/
-
   }
   /*城市按钮的more按钮*/
   #more_button{
