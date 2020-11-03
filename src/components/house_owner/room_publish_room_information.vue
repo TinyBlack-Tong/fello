@@ -35,7 +35,6 @@
       {{tag}}
     </el-tag>
     <el-input
-
       class="input-new-tag"
       v-if="inputVisible"
       v-model="inputValue"
@@ -46,9 +45,6 @@
     >
     </el-input>
     <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-
-
-
     <el-button class="goto_next"  @click="goto_next()" style="background: #1D976C;color: white">继续</el-button>
     <el-button class="goto_prier" @click="goto_prier()" style="background: #1D976C;color: white">上一步</el-button>
   </div>
@@ -57,7 +53,7 @@
 
 <script>
     export default {
-        name: "",
+      name: "",
       data(){
           return{
             description:"牛逼",
@@ -90,12 +86,30 @@
         },
         goto_prier(){
           this.$router.push({
-            path:'/room_publish_location'
+            path:'/room_publish_picture'
           })
         },
+
         goto_next(){
+          const data = this.$route.query
+          console.log(data)
           this.$router.push({
-            path:'/room_publish_price'
+            path:'/room_publish_room_price',
+            query:{
+              city: data.city,
+              type: data.type,
+              pplMax: data.pplMax,
+              bedroomNum: data.bedroomNum,
+              bedNum: data.bedNum,
+              bathroomNum: data.bathroomNum,
+              location: data.location,
+              title: data.title,
+              checkinTimeFrom: data.checkinTimeFrom,
+              checkinTimeTo: data.checkinTimeTo,
+              checkoutTime: data.checkoutTime,
+              tags: this.dynamicTags.join(" "),
+              description: this.description
+            }
           })
         },
       }

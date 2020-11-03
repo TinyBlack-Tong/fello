@@ -39,11 +39,34 @@
           })
         },
         goto_next(){
-          this.$router.push({
-            path:'/'
+          const data = this.$route.query
+          const result = {  // 最终提交的数据
+            city: data.city,
+            type: data.type,
+            pplMax: data.pplMax,
+            bedroomNum: data.bedroomNum,
+            bedNum: data.bedNum,
+            bathroomNum: data.bathroomNum,
+            location: data.location,
+            title: data.title,
+            checkinTimeFrom: data.checkinTimeFrom,
+            checkinTimeTo: data.checkinTimeTo,
+            checkoutTime: data.checkoutTime,
+            tags: data.tags,
+            description: data.description,
+            price:data.price,
+            phone:this.phone,
+            ownerId: localStorage.getItem("id")
+          }
+          console.log(result)
+          this.$axios.post('http://localhost:8081/api/houses', result).then(res => {
+            console.log(res)
           })
+          this.$message({
+            message: '发布成功,待审核',
+            type: 'success'
+          });
         },
-
       }
     }
 </script>

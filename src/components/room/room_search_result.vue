@@ -50,6 +50,9 @@
             </div>
           </div>
         </div>
+<!--        <div class="bottom" style="margin-top: 100px">-->
+<!--          <el-button @click="getNextPage()" type="primary">下一页</el-button>-->
+<!--        </div>-->
     </div>
 
 </template>
@@ -84,13 +87,14 @@
 
             discountedPrice: 1,
           },],
-          tags: [{}]
+          tags: [{}],
+          page:0
         };
       },
       mounted() {
         var content = this.$route.query.content;
         const _this = this;
-        this.$axios.get(`http://localhost:8081/api/hot-houses?page=0&city=` + content).then(function (res) {
+        this.$axios.get('http://localhost:8081/api/hot-houses?page=' + this.page + '&city=' + content).then(function (res) {
           console.log(res.data.data)
           _this.room_list = res.data.data
         });
@@ -139,6 +143,15 @@
           })
         },
 
+        getNextPage() {
+          const content = this.$route.query.content
+          this.page += 1
+          this.$axios.get('http://localhost:8081/api/houses-search?page=' + this.page + 'key='+ content).then(res => {
+            console.log(res)
+          }).catch(e => {
+            console.log(e)
+          })
+        }
 
       }
     };

@@ -5,20 +5,10 @@
     开启智能定价，让房源每晚价格随您所在地区的需求变化而自动调整，保持最佳竞争力。
   </h3>
     <h2 style="margin-top: 50px">基础价格</h2>
-
-
     <el-input style="margin-top: 20px;width: 470px" v-model="price" placeholder="单位:人民币"></el-input>
-
     <el-button class="goto_next"  @click="goto_next()" style="background: #1D976C;color: white">继续</el-button>
     <el-button class="goto_prier" @click="goto_prier()" style="background: #1D976C;color: white">上一步</el-button>
-
-
-
-
-
   </div>
-
-
 </template>
 
 <script>
@@ -32,12 +22,30 @@
       methods:{
         goto_prier(){
           this.$router.push({
-            path:'/room_publish_information'
+            path:'/room_publish_room_information'
           })
         },
         goto_next(){
+          const data = this.$route.query
+          console.log(data)
           this.$router.push({
-            path:'/room_publish_phone'
+            path:'/room_publish_phone',
+            query: {
+              city: data.city,
+              type: data.type,
+              pplMax: data.pplMax,
+              bedroomNum: data.bedroomNum,
+              bedNum: data.bedNum,
+              bathroomNum: data.bathroomNum,
+              location: data.location,
+              title: data.title,
+              checkinTimeFrom: data.checkinTimeFrom,
+              checkinTimeTo: data.checkinTimeTo,
+              checkoutTime: data.checkoutTime,
+              tags: data.tags,
+              description: data.description,
+              price:this.price
+            }
           })
         },
 

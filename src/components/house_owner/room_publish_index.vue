@@ -40,7 +40,7 @@
             :value="item1.value1">
           </el-option>
         </el-select>
-        <el-input style="position: relative;top: 60px;left: -230px" v-model="city" placeholder="例如：北京市"></el-input>
+        <el-input style="position: relative;top: 60px;left: -230px" v-model="city" placeholder="例如：北京"></el-input>
         <el-button @click="goto_room_publish_basic()" style="position: relative;top: 120px;left: -587px;background: #1D976C;color: white">继续</el-button>
       </div>
     </div>
@@ -54,31 +54,31 @@
           flag_type:false,
           city:"北京市",
           cities: [{
-            value: '0',
+            value: 0,
             label: '整个房源'
           }, {
-            value: '1',
+            value: 1,
             label: '独立卧室'
           }, {
-            value: '2',
+            value: 2,
             label: '合用'
           }],
           //房源类型
           type: '',
           options: [{
-            value1: '选项1',
+            value1: 1,
             label1: '1位'
           }, {
-            value1: '选项2',
+            value1: 2,
             label1: '2位'
           }, {
-            value1: '选项3',
+            value1: 3,
             label1: '3位'
           }, {
-            value1: '选项4',
+            value1: 4,
             label1: '4位'
           }, {
-            value1: '选项5',
+            value1: 5,
             label1: '5位'
           }],
           value1: ''
@@ -90,7 +90,10 @@
         goto_room_publish_basic(){
           this.$router.push({
             name:'room_publish_basic',
-            params: {city: this.city }
+            query: {
+              city: this.city,
+              type: this.type
+            }
           })
         }
 

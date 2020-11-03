@@ -15,8 +15,18 @@ import room_publish_picture from "../components/house_owner/room_publish_picture
 import room_publish_room_information from "../components/house_owner/room_publish_room_information";
 import room_publish_room_price from "../components/house_owner/room_publish_room_price";
 import room_publish_phone from "../components/house_owner/room_publish_phone";
-import room_monitor from "../components/house_owner/room_monitor";
+// import room_monitor from "../components/house_owner/room_monitor";
 import room_order_dragon from "../components/house_owner/room_order_dragon"
+import user_information from "../components/person/user_information";
+//dragon
+// import room_order from "../components/room/room_order"
+import room_monitor from "../components/regulate/room_monitor";
+import work_chance from "../components/regulate/work_chance.vue";
+// import news from "../components/regulate/news.vue";
+// import policy from "../components/regulate/policy.vue";
+import trust from "../components/regulate/trust.vue";
+import experi from "../components/regulate/experience.vue"
+
 Vue.use(Router)
 
 export default new Router({
@@ -30,6 +40,7 @@ export default new Router({
         name:'index_mid',
         component:index_mid,
       },
+
         {
           path: '/room',
           name: 'room',
@@ -46,6 +57,36 @@ export default new Router({
           name: 'room_search_result',
           component: room_search_result,
         },
+        {
+          path: '/monitor',
+          name: 'monitor',
+          component: room_monitor,
+        },
+        {
+          path:'/workchance',
+          name:'workchance',
+          component: work_chance,
+        },
+        // {
+        //   path:'/news',
+        //   name:'news',
+        //   component: news,
+        // },
+        // {
+        //   path:'/policy',
+        //   name:'policy',
+        //   component: policy,
+        // },
+        {
+          path:'/trust',
+          name:'trust',
+          component: trust,
+        },
+        {
+          path:'/experience',
+          name:'experience',
+          component: experi,
+        }
 
       ],
     },
@@ -106,8 +147,17 @@ export default new Router({
       name: 'room_order_dragon',
       component: room_order_dragon,
     },
+    {
+      path: '/user_information',
+      name: '/user_information',
+      component:user_information,
+    },
+    {
+      path: '/room_order_dragon',
+      name: 'room_order_dragon',
+      component: room_order_dragon,
+    },
 
+  ],
 
-
-  ]
 })

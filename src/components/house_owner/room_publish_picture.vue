@@ -73,18 +73,11 @@
 
       <h2 style="margin-top: 50px">退房时间</h2>
       <el-time-picker
-        v-model="value1"
+        v-model="checkoutTime"
+        value-format="HH:mm"
         :picker-options="{
-      selectableRange: '18:30:00 - 20:30:00'
-    }"
-        placeholder="任意时间点">
-      </el-time-picker>
-      <el-time-picker
-        arrow-control
-        v-model="value2"
-        :picker-options="{
-      selectableRange: '18:30:00 - 20:30:00'
-    }"
+          selectableRange: '18:30:00 - 20:30:00'
+        }"
         placeholder="任意时间点">
       </el-time-picker>
 
@@ -175,12 +168,27 @@
         },
         goto_prier(){
           this.$router.push({
-            path:'/room_publish_picture'
+            path:'/room_publish_location'
           })
         },
         goto_next(){
+          const data = this.$route.query
+          console.log(data)
           this.$router.push({
-            path:'/room_publish_room_price'
+            path:'/room_publish_room_information',
+            query:{
+              city: data.city,
+              type: data.type,
+              pplMax: data.pplMax,
+              bedroomNum: data.bedroomNum,
+              bedNum: data.bedNum,
+              bathroomNum: data.bathroomNum,
+              location: data.location,
+              title: this.title,
+              checkinTimeFrom: this.checkinTimeFrom,
+              checkinTimeTo: this.checkinTimeTo,
+              checkoutTime: this.checkoutTime
+            }
           })
         },
       }

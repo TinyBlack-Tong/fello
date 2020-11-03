@@ -7,42 +7,68 @@
 
 <!--      最多容纳房客人数-->
       <div class="room_basic_information">
-      <div class="person_number">
-      <h4>最多容纳房客人数</h4>
-      </div>
 
-        <div class="button_place_one">
-        <el-button style="border-color: #1D976C" @click="minus_person_number()" icon="el-icon-minus" circle></el-button>
-        <h3 style="margin-left:25px;margin-right:25px;position: relative;top: 10px;border-color: #1D976C">{{pplMax}}</h3>
-        <el-button style="border-color: #1D976C" @click="plus_person_number()" icon="el-icon-plus" circle></el-button>
-      </div>
-
-        <div class="bed_number_information">
-        <h3 style="margin-top: 40px;color: #B0C4DE">有几张床？</h3>
-        <h4 style="margin-top: 100px;margin-left: -80px">床铺数量</h4>
-        </div>
-        <div class="button_place_two">
-        <el-button style="border-color: #1D976C" @click="minus_bed_number()" icon="el-icon-minus" circle></el-button>
-        <h3 style="margin-left:25px;margin-right:25px;position: relative;top: 10px;border-color: #1D976C">{{bedroomNum}}</h3>
-          <el-button style="border-color: #1D976C" @click="plus_bed_number()" icon="el-icon-plus" circle></el-button>
+        <div class="item-wrap">
+          <div class="title">
+            <h4>最多容纳房客人数</h4>
+          </div>
+          <div class="right">
+            <div class="right-content">
+              <el-button style="border-color: #1D976C" @click="minus_person_number()" icon="el-icon-minus" circle></el-button>
+              <h3 style="border-color: #1D976C">{{pplMax}}</h3>
+              <el-button style="border-color: #1D976C" @click="plus_person_number()" icon="el-icon-plus" circle></el-button>
+            </div>
+          </div>
         </div>
 
-        <div class="washroom_number_information">
-          <h3 style="margin-top: 60px;color: #B0C4DE">有几个卫生间？</h3>
-          <h4 style="margin-top: 140px;margin-left: -110px">卫生间</h4>
+        <div class="item-wrap bg-item">
+          <div class="title">
+            <h3 style="color: #B0C4DE">有几张床？</h3>
+            <h4>床铺数量</h4>
+          </div>
+          <div class="right">
+            <div class="right-content">
+              <el-button style="border-color: #1D976C" @click="minus_bed_number()" icon="el-icon-minus" circle></el-button>
+              <h3 style="border-color: #1D976C">{{bedNum}}</h3>
+              <el-button style="border-color: #1D976C" @click="plus_bed_number()" icon="el-icon-plus" circle></el-button>
+            </div>
+          </div>
+        </div>
 
-          <div class="button_place_three">
-            <el-button style="border-color: #1D976C" @click="minus_toilet_number()" icon="el-icon-minus" circle></el-button>
-            <h3 style="margin-left:25px;margin-right:25px;position: relative;top: 10px;border-color: #1D976C">{{bathNum}}</h3>
-            <el-button style="border-color: #1D976C" @click="plus_toilet_number()" icon="el-icon-plus" circle></el-button>
+        <div class="item-wrap bg-item">
+          <div class="title">
+            <h3 style="color: #B0C4DE">有几间房间？</h3>
+            <h4 style="">房间数量</h4>
+          </div>
+          <div class="right">
+            <div class="right-content">
+              <el-button style="border-color: #1D976C" @click="minus_bedroom_number()" icon="el-icon-minus" circle></el-button>
+              <h3 style="border-color: #1D976C">{{bedroomNum}}</h3>
+              <el-button style="border-color: #1D976C" @click="plus_bedroom_number()" icon="el-icon-plus" circle></el-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-wrap bg-item">
+          <div class="title">
+            <h3 style="color: #B0C4DE">有几个卫生间？</h3>
+            <h4>卫生间</h4>
+          </div>
+            <div class="right">
+              <div class="right-content">
+                <el-button style="border-color: #1D976C" @click="minus_toilet_number()" icon="el-icon-minus" circle></el-button>
+                <h3 style="border-color: #1D976C">{{bathroomNum}}</h3>
+                <el-button style="border-color: #1D976C" @click="plus_toilet_number()" icon="el-icon-plus" circle></el-button>
+              </div>
+            </div>
           </div>
         </div>
 
 
-        <el-button class="goto_next"  @click="goto_next()" style="background: #1D976C;color: white">继续</el-button>
-        <el-button class="goto_prier" @click="goto_prier()" style="background: #1D976C;color: white">上一步</el-button>
+          <el-button class="goto_next"  @click="goto_next()" style="background: #1D976C;color: white">继续</el-button>
+          <el-button class="goto_prier" @click="goto_prier()" style="background: #1D976C;color: white">上一步</el-button>
 
-      </div>
+        </div>
     </div>
 
 
@@ -60,9 +86,9 @@
             //床数
             bedroomNum:1,
             //卫生间数量
-            bathNum:1,
+            bathroomNum:1,
             //
-
+            bedNum:1,
           }
       },
       methods:
@@ -80,33 +106,31 @@
           if (this.pplMax==11){
             this.pplMax=10;
           }
-
-          console.log(this.$route.params.city)
         },
           //床数
           minus_bed_number(){
-            this.bedroomNum--;
-            if (this.bedroomNum==0){
-              this.bedroomNum=1;
+            this.bedNum--;
+            if (this.bedNum==0){
+              this.bedNum=1;
             }
           },
           plus_bed_number(){
-            this.bedroomNum++;
-            if (this.bedroomNum==10){
-              this.bedroomNum=9;
+            this.bedNum++;
+            if (this.bedNum==10){
+              this.bedNum=9;
             }
           },
           //卫生间
           minus_toilet_number(){
-          this.bathNum--;
-          if (this.bathNum==0){
-            this.bathNum=1;
+          this.bathroomNum--;
+          if (this.bathroomNum==0){
+            this.bathroomNum=1;
           }
         },
         plus_toilet_number(){
-          this.bathNum++;
-          if (this.bathNum==6){
-            this.bathNum=5;
+          this.bathroomNum++;
+          if (this.bathroomNum==6){
+            this.bathroomNum=5;
           }
 
         },
@@ -115,13 +139,36 @@
             path:'/room_publish_index'
           })
         },
+        //房间数
+          minus_bedroom_number(){
+            this.bedroomNum--;
+            if (this.bedroomNum==0){
+              this.bedroomNum=1;
+            }
+          },
+          plus_bedroom_number(){
+            this.bedroomNum++;
+            if (this.bedroomNum==10){
+              this.bedroomNum=9;
+            }
+          },
         goto_next(){
+          const data = this.$route.query
+          console.log(data)
           this.$router.push({
-            path:'/room_publish_location'
+            path:'/room_publish_location',
+            query: {
+              city: data.city,
+              type: data.type,
+              pplMax: this.pplMax,
+              bedroomNum: this.bedroomNum,
+              bedNum: this.bedNum,
+              bathroomNum: this.bathroomNum
+            }
           })
         },
-
-      }
+      },
+    
     }
 </script>
 
@@ -137,46 +184,36 @@
     margin-top: 50px;
     display: flex;
     height: auto;
-
-
   }
   .room_basic_information{
     /*border-style: solid;*/
     display: flex;
     flex-direction: column;
+  }
+  .item-wrap{
+    display: flex;
+    margin-top: 20px;
+  }
 
+  .item-wrap .title {
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
   }
-  .bed_number_information{
-    display: flex;
-    /*border-style: solid;*/
 
+  .bg-item {
+    height: 100px;
   }
-  .button_place_one{
-    display: flex;
-    position: absolute;
-    top: 180px;
-    left: 200px;
-    /*border-style: solid;*/
-  }
-  .button_place_two{
-    /*border-style: solid;*/
-    display: flex;
-    position: absolute;
-    top: 320px;
-    left: 200px;
-  }
-  .button_place_three{
-    display: flex;
-    position: absolute;
-    top: 130px;
-    left: 200px;
 
-  }
-  .washroom_number_information{
-    position: relative;
+  .item-wrap .right{
     display: flex;
-
+    align-items: flex-end;
   }
+
+  .item-wrap .right-content {
+    display: flex;
+  }
+
   .goto_next{
     position: absolute;
     bottom: -100px;

@@ -1,8 +1,8 @@
 <template>
   <div>
   <div class="swap">
-    <Carousel autoplay v-model="value2" loop>
-      <CarouselItem v-for="item in imageList" :key="item">
+    <Carousel autoplay  v-model="value2" loop>
+      <CarouselItem v-for="item in imageList" :key="item.id">
         <div class="demo-carousel">
           <img class="carousel" :src='item.src'>
         </div>
@@ -65,10 +65,11 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
+      userID:localStorage.getItem('id'),
       dialogVisible: false,
       //轮播图的图片数组
       imageList:[{
-        src:require('../../assets/banner2.jpg')
+        src:require('../../assets/banner1.jpg')
       },{
         src:require('../../assets/wanshengjie.jpg')
       },],
@@ -121,6 +122,7 @@ export default {
             path:"/room",
             query:{
               room_id:id,
+              user_id:this.userID,
               // room_list:_this.room_list,
             }
           })

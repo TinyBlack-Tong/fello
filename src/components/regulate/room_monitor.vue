@@ -16,9 +16,9 @@
                     <h5 class="name">地址：{{item.location}}</h5>
                    
                 </div>
-                 <!-- <div class=flex-container-m>
+                 <div class=flex-container-m>
                      <h5 class="name">电话:{{item.phone}}</h5>
-                 </div> -->
+                 </div>
                 <el-collapse v-model="activeNames" @change="handleChange" class="unfold">
                     <el-collapse-item title="详细信息" name="1" class="co-title">
                         <div class=flex-container-m>
@@ -80,8 +80,8 @@ export default {
     computed:{
         myspliter() {
             return function(string){
-                if(string!=null) {return string.split(" ");  }
-                else{ return '无'}       
+                
+                return string.split(" ");         
             }           
         } 
     },
@@ -93,39 +93,35 @@ export default {
             temp_reason:"1",
             temp_id:"",
             dialogFormVisible: false,
-             houses_list:[{
-            //     id:'',
-            //     city:'',
-            //     url:'',
-            //     type:'',
-            //     bedNum:'',
-            //     title:'',
-            //     description:'',
-            //     price:'',
-            //     rate:''
-                id:"01",//房间id
-                ownerId:"o0001",//申请人名称
-                title:"bistu宿舍",//房间标题
-                location:"北京市朝阳区",//房屋地址
-                type:"0",//房屋类型
-                pplMax:"10",//最大入住人5
-                bedroomNum:"7",//卧室数量
-                bedNum:"10",//床数
-                bathroomNum:"7",//卫生间数量
-                url:hmm,//图片
-                description:"——+——+——+——+——+——+——+——+——+——+——+——+——+——+——+——+——+——+</br>"+"+++++",//房间描述
-                city:"北京",//房屋所在城市   
-                phone:"123456789",//手机号
-                price:"100",//价格
-                checkinTimeFrom:"2020-10-25",//入住开始时间
-                checkinTImeTo:"2020-10-29",//入住结束时间
-                checkoutTime:"2020-10-30",//退房时间
-                tags:"干净 整洁 便宜",
-                discountedPrice:'-1',
-                commentNum:'',
-                status:'',
-                rate:'',
-                //reason:""//不批准原因
+            houses_list:[{
+                id:'',
+                city:'',
+                url:'',
+                type:'',
+                bedNum:'',
+                title:'',
+                description:'',
+                price:'',
+                rate:''
+                //id:"01",//房间id
+                //ownerId:"o0001",//申请人名称
+                //title:"bistu宿舍",//房间标题
+                // location:"北京市朝阳区",//房屋地址
+                // type:"0",//房屋类型
+                // pplMax:"10",//最大入住人5
+                // bedroomNum:"7",//卧室数量
+                // bedNum:"10",//床数
+                // bashroomNum:"7",//卫生间数量
+                // url:hmm,//图片
+                // description:"——+——+——+——+——+——+——+——+——+——+——+——+——+——+——+——+——+——+</br>"+"+++++",//房间描述
+                // city:"北京",//房屋所在城市   
+                // phone:"123456789",//手机号
+                // price:"100",//价格
+                // checkinTimeFrom:"2020-10-25",//入住开始时间
+                // checkinTImeTo:"2020-10-29",//入住结束时间
+                // checkoutTime:"2020-10-30",//退房时间
+                // tags:"干净 整洁 便宜",
+                // reason:""//不批准原因
             },
             // {
             //     id:"02",
@@ -165,7 +161,6 @@ export default {
             message: '删除成功',
             type: 'warning'
             });
-            window.location.reload()
            })
         },
         check(id){
@@ -180,7 +175,7 @@ export default {
         },
         page(currentPage){
             const _this=this
-              this.$axios.get('http://localhost:8081/api/admin/houses/?page='+currentPage-1).then(function(resp){
+              this.$axios.get('http://localhost:8081/api/hot-houses/?page=0&city=北京').then(function(resp){
               _this.houses_list=resp.data.data
               _this.total=resp.data.totalElements
               //_this.$forceUpdate()
@@ -193,7 +188,7 @@ export default {
     created(){
          const _this=this
          
-         this.$axios.get('http://localhost:8081/api/admin/houses/?page=0').then(function(resp){
+         this.$axios.get('http://localhost:8081/api/hot-houses/?page=1&city=上海').then(function(resp){
            //alert(resp.data.data[1].title)
            _this.houses_list=resp.data.data
            _this.total=resp.data.totalElements

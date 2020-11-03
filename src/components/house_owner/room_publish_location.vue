@@ -70,10 +70,21 @@
           })
         },
         goto_next(){
+          const data = this.$route.query
+          console.log(data)
           this.$router.push({
-            path:'/room_publish_picture'
+            path:'/room_publish_picture',
+            query: {
+              city: data.city,
+              type: data.type,
+              pplMax: data.pplMax,
+              bedroomNum: data.bedroomNum,
+              bedNum: data.bedNum,
+              bathroomNum: data.bathroomNum,
+              location: this.location
+            }
           })
-        },
+        }
       }
     }
 </script>

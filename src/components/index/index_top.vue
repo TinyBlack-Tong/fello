@@ -8,10 +8,10 @@
 
 
 <!--  固定在页面顶部的搜索框 以及注册和登录-->
-    <Affix :offset-top="0" @on-change="change">
 
 
     <div class="top_place">
+
 <!--  <Affix>-->
 <!--    <div id="control_color">-->
     <div id="logo_image" @click="goto_index()">
@@ -46,14 +46,14 @@
             <el-input v-model="dynamicValidateForm1.email"></el-input>
           </el-form-item>
           <el-form-item
-            prop="identify_code"
+            prop="password"
             label="密码">
-            <el-input v-model="dynamicValidateForm1.identify_code"></el-input>
+            <el-input show-password v-model="dynamicValidateForm1.password"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible1 = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible1 = false" >确 定</el-button>
+    <el-button type="primary" @click="register(),dialogVisible1 = false" >确 定</el-button>
   </span>
       </el-dialog>
 <!--      对话框 dialog-->
@@ -76,14 +76,14 @@
             <el-input v-model="dynamicValidateForm.email"></el-input>
           </el-form-item>
           <el-form-item
-            prop="user_password"
+            prop="password"
             label="密码">
-            <el-input v-model="dynamicValidateForm.identify_code"></el-input>
+            <el-input show-password v-model="dynamicValidateForm.password"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false" >确 定</el-button>
+    <el-button type="primary" @click="submit(),dialogVisible = false" >确 定</el-button>
   </span>
       </el-dialog>
 
@@ -91,7 +91,7 @@
 
 <!--      头像区域-->
       <div  class="demo-avatar" @click="show_frame" v-show="headImage_flag">
-        <Avatar icon="ios-person"  size="large" src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>
+        <Avatar icon="ios-person"  size="large" :src="this.url"/>
       </div>
       <div id="frame" v-show="frame_flag">
         <div class="frame_inside"  v-for="(item,index) in list" :key="item" @click="goto_page(index)">
@@ -102,7 +102,6 @@
 
 <!--  </Affix>-->
   </div>
-    </Affix>
     <div>
       <router-view></router-view>
 
@@ -116,15 +115,15 @@
         <!--        同路人-->
         <div id="fellow_people">
           <Button @click="info"><h2>同路人</h2></Button>
-          <Button @click="info">工作机会</Button>
-          <Button @click="info">同路人新闻</Button>
-          <Button @click="info">政策</Button>
+          <Button @click="goto_work()">工作机会</Button>
+          <Button>同路人新闻</Button>
+          <Button @click="goto_policy()">政策</Button>
         </div>
         <!--        发现-->
         <div id="discover">
-          <Button @click="info"><h2>发现</h2></Button>
-          <Button @click="info">信任与安全</Button>
-          <Button @click="info">缤纷体验</Button>
+          <Button @click="info()"><h2>发现</h2></Button>
+          <Button @click="goto_trust()">信任与安全</Button>
+          <Button @click="goto_experi()">缤纷体验</Button>
           <Button @click="info">同路人杂志</Button>
         </div>
         <!--     出租   -->
@@ -139,7 +138,8 @@
           <Button @click="info"><h2>发现</h2></Button>
           <Button @click="info">信任与安全</Button>
           <Button @click="info">缤纷体验</Button>
-          <Button @click="info">同路人杂志</Button>
+          <Button @click="goto_monitor">管理员</Button>
+
         </div>
       </div>
     </div>
@@ -169,6 +169,12 @@
       },
       data(){
           return{
+            //判断是否等录
+            flag_button:false,
+            //是否已经登录
+            isOn:false,
+            person_information:[],
+            url:"",
             list:["个人资料","账号","发布房源","我的旅行指南","商务同路人","退出"],
             key:"",
             page:0,
@@ -182,7 +188,7 @@
                 value: ''
               }],
               email: '',
-              identify_code:'',
+              password:'',
             },
             dialogVisible1:false,
             dynamicValidateForm1: {
@@ -190,7 +196,7 @@
                 value: ''
               }],
               email: '',
-              identify_code:'',
+              password:'',
             },
             value2:0,
             //logo同路人的图片地址
@@ -206,16 +212,12 @@
           }
       },
       mounted() {
-        //   const _this=this
-        //   this.$axios.get('http://localhost:8081/api/hot-houses?page=0&city=%E5%8C%97%E4%BA%AC').then(function (res) {
-        //   // console.log("row的值为"+this.res.code)
-        //   console.log(res.data.data)
-        // })
+
       },
       methods:{
         goto_index(){
           this.$router.push({
-            path: "/",
+            path: '/',
           })
 
         },
@@ -230,8 +232,126 @@
             query:{
                 content:this.key
             }
-
           })
+        },
+        //注册
+        register() {
+          const _this=this
+          console.log("on"+_this.isOn)
+          //满足注册条件 email和密码不为空 并且isON为false表示没有登录
+          if (this.dynamicValidateForm1.email.length!=0&&this.dynamicValidateForm1.password.length!=0&&this.isOn==false) {
+            this.$axios({
+              method: "post",
+              url: "http://localhost:8081/api/users-logout",
+              data: {
+                email: this.dynamicValidateForm1.email,
+                password: this.dynamicValidateForm1.password
+              }
+            }).then((res) => {
+              console.log("注册请求完成后")
+              console.log(res.data.code);
+              console.log(res)
+              if (res.data.code ==200) {
+                this.$message({
+                  message: '恭喜你，注册成功',
+                  type: 'success'
+                });
+                // const info ={id:this.res.data.id}
+                // localStorage.setItem(this.res.data.id,JSON.stringify(info))
+                _this.person_information=this.res.data
+                _this.isOn = true
+                console.log("isOn的状态"+_this.isOn)
+                _this.url = res.data.data.headPortrait
+                console.log("url"+_this.url)
+
+
+                this.$router.push({
+                  path: "/",
+                  query: {
+                    info_list: res.data
+                  }
+                });
+              } else if (res.data.code==401){
+                _this.$message({
+                  message: '该账号已经被注册',
+                  type: 'warning',
+                });
+
+              }
+            })
+          }else if (this.dynamicValidateForm1.email.length==0&&this.dynamicValidateForm1.password.length==0) {
+                _this.$message({
+                  message: '用户名或密码不能为空',
+                  type: 'warning',
+                });
+
+          }else if (_this.isOn=true){
+            _this.$message({
+              message: '您已经登录了',
+              type: 'warning',
+            });
+
+          }
+
+        },
+        //登录
+        submit(){
+          console.log("测试一下登录")
+          console.log(this.dynamicValidateForm.email)
+          const _this=this
+          console.log(this.dynamicValidateForm.password)
+          if (this.dynamicValidateForm.email.length!=0&&this.dynamicValidateForm.password.length!=0||this.isOn==true){
+          this.$axios({
+            method:"post",
+            url:"http://localhost:8081/api/users-login",
+            data:{
+              email:this.dynamicValidateForm.email,
+              password:this.dynamicValidateForm.password
+            },
+
+          }).then((res)=>{
+            console.log("code状态"+res.data.code)
+
+            if (res.data.code==400){
+              _this.$message({
+                message: '(＞人＜；)，用户名或密码有误啊',
+                type: 'warning',
+              });
+            }
+            if (res.data.code==200){
+              // _this.person_information=this.res.data
+              console.log("登录功能完成")
+              _this.isOn=true
+              console.log("isOn"+_this.isOn)
+              localStorage.setItem('id',res.data.data.id)
+              _this.$message({
+                message: '恭喜你，登录成功',
+                type: 'success'
+              });
+              _this.url=res.data.data.headPortrait
+              console.log(res.data)
+              this.$router.push({
+                  path:"/",
+                  query:{
+                    info_list:res.data
+                }
+
+              });
+            }
+          })
+          }
+          if (this.dynamicValidateForm.email.length==0||this.dynamicValidateForm.password.length==0) {
+              _this.$message({
+                message: '用户名或密码不能为空',
+                type: 'warning',
+              });
+            }
+          // else if (this.isOn=true){
+          //   _this.$message({
+          //     message: '您已经登陆了',
+          //     type: 'warning',
+          //   });
+          // }
         },
         order_center(){
             //如果用户此时还没有预订相关的民宿房间,在房源订单中心的label下方展示frame
@@ -259,13 +379,38 @@
           }
 
         },
+        goto_work(){
+          this.$router.push({
+            path: "/workchance",
+          })
+        },
+        // goto_order(){
+        //   this.$router.push({
+        //     path: "/order",
+        //   })
+        // },
+        goto_trust(){
+          this.$router.push({
+            path: "/trust"
+          })
+        },
+        goto_experi(){
+          this.$router.push({
+            path: "/experience"
+          })
+        },
+        goto_monitor(){
+          this.$router.push({
+            path: "/monitor"
+          })
+        },
         ok () {
-          this.$Message.info('点击了确定');
-
-          // this.$axios.get('http://localhost:8081/api/houses/2',row).then(function (res) {
-          //   console.log("row的值为"+row)
-          //   alert(row)
-          // })
+          // this.$Message.info('点击了确定');
+          const _this=this;
+          this.$axios.post('http://localhost:8081/api/users-logout',_this.dynamicValidateForm1).then(function (resp) {
+            console.log(this.dynamicValidateForm1.password)
+            console.log(resp.data);
+          })
         },
         //弹框消息
         open2() {
@@ -284,23 +429,23 @@
       //  点击开始探索
       goto_discover(){
         this.$router.push({
-          path: "/room_publish",
+          path: "/order",
         }),
           this.order_center_flag=false
       }
     },
-
       info(){
-        // const _this=this;
-        console.log("@222222222")
+          alert("!");
+      },
+      goto_discover(){
+        this.$router.push({
+          path: "/room_publish",
+        }),
+          this.order_center_flag=false
+      },
 
-        // this.$axios.get('http://localhost:8081/api/houses/2',row).then(function (res) {
-        //   console.log("row的值为"+row)
-        //   alert(row)
-        // })
 
 
-      }
     }
 </script>
 

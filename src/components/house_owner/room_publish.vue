@@ -1,6 +1,6 @@
 <template>
     <div>
-      <Affix :offset-top="0" @on-change="change">
+      <Affix :offset-top="0">
 
       <div class="header">
         <div id="logo_image" @click="goto_index()">
